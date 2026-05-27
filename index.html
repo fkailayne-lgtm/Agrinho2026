@@ -1,1 +1,184 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Simulador de Solo Saudável</title>
 
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body{
+      background: linear-gradient(135deg,#3e7c17,#8dc26f);
+      min-height:100vh;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+    }
+
+    .container{
+      width: 90%;
+      max-width: 420px;
+      background:white;
+      border-radius:20px;
+      padding:30px;
+      box-shadow:0 10px 30px rgba(0,0,0,0.2);
+    }
+
+    h1{
+      text-align:center;
+      color:#2d5a12;
+      margin-bottom:20px;
+    }
+
+    .login-box,
+    .simulator{
+      display:flex;
+      flex-direction:column;
+      gap:15px;
+    }
+
+    input, select, button{
+      padding:12px;
+      border-radius:10px;
+      border:1px solid #ccc;
+      font-size:16px;
+    }
+
+    button{
+      background:#3e7c17;
+      color:white;
+      border:none;
+      cursor:pointer;
+      transition:0.3s;
+      font-weight:bold;
+    }
+
+    button:hover{
+      background:#2d5a12;
+    }
+
+    .hidden{
+      display:none;
+    }
+
+    .result{
+      margin-top:15px;
+      padding:15px;
+      border-radius:10px;
+      background:#f0f7ea;
+      color:#2d5a12;
+      font-weight:bold;
+      text-align:center;
+    }
+
+    .soil-image{
+      width:100%;
+      border-radius:15px;
+      margin-bottom:15px;
+    }
+
+    .footer{
+      text-align:center;
+      margin-top:20px;
+      color:#666;
+      font-size:14px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <!-- LOGIN -->
+    <div id="loginPage" class="login-box">
+      <h1>🌱 Login</h1>
+
+      <input type="text" id="user" placeholder="Usuário">
+      <input type="password" id="pass" placeholder="Senha">
+
+      <button onclick="login()">Entrar</button>
+    </div>
+
+    <!-- SIMULADOR -->
+    <div id="simulatorPage" class="simulator hidden">
+
+      <h1>🌿 Simulador de Solo Saudável</h1>
+
+      <img 
+        class="soil-image"
+        src="https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?q=80&w=1200&auto=format&fit=crop"
+        alt="Solo saudável"
+      >
+
+      <label>Nível de Nutrientes:</label>
+      <select id="nutrients">
+        <option value="baixo">Baixo</option>
+        <option value="medio">Médio</option>
+        <option value="alto">Alto</option>
+      </select>
+
+      <label>Nível de Irrigação:</label>
+      <select id="irrigation">
+        <option value="baixo">Baixa</option>
+        <option value="medio">Média</option>
+        <option value="alto">Alta</option>
+      </select>
+
+      <button onclick="simulate()">Simular Solo</button>
+
+      <div id="result" class="result"></div>
+
+      <div class="footer">
+        Projeto Educacional 🌱
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+
+    function login(){
+      const user = document.getElementById("user").value;
+      const pass = document.getElementById("pass").value;
+
+      if(user !== "" && pass !== ""){
+        document.getElementById("loginPage").classList.add("hidden");
+        document.getElementById("simulatorPage").classList.remove("hidden");
+      } else {
+        alert("Preencha usuário e senha!");
+      }
+    }
+
+    function simulate(){
+
+      const nutrients = document.getElementById("nutrients").value;
+      const irrigation = document.getElementById("irrigation").value;
+
+      let quality = "";
+
+      if(nutrients === "alto" && irrigation === "alto"){
+        quality = "✅ Solo Excelente! Rico em nutrientes e bem irrigado.";
+      }
+      else if(nutrients === "medio" && irrigation === "medio"){
+        quality = "🌿 Solo Bom! Condições equilibradas.";
+      }
+      else if(nutrients === "baixo" && irrigation === "baixo"){
+        quality = "⚠️ Solo Fraco! Poucos nutrientes e pouca água.";
+      }
+      else{
+        quality = "🌱 Solo Moderado! Ajustes podem melhorar a qualidade.";
+      }
+
+      document.getElementById("result").innerHTML = quality;
+    }
+
+  </script>
+
+</body>
+</html>
